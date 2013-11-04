@@ -48,7 +48,7 @@ class emi(
   $groupconf = 'puppet:///modules/emi/config/groups.conf',
   $userconf = 'puppet:///modules/emi/config/users.conf',
   $igi = true
-) {
+) inherits emi::params {
 
    include yumconfig::yum-priorities
    include yumconfig::yum-protectbase
@@ -98,7 +98,7 @@ class emi(
       ensure => installed,
       provider => rpm,
       source => $emi_release,
-      require => [Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_priorities_package]]
+      require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_priorities_package]]
    }
 
    package { ["glite-yaim-core","glite-yaim-clients"]: ensure => latest, require => Package["emi-release"] }
