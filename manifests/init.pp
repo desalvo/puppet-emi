@@ -98,7 +98,7 @@ class emi(
       ensure => installed,
       provider => rpm,
       source => $emi_release,
-      require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_protectebase_package]]
+      require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_protectbase_package]]
    }
 
    package { ["glite-yaim-core","glite-yaim-clients"]: ensure => latest, require => Package["emi-release"] }
