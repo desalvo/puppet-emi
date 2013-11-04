@@ -1,4 +1,6 @@
-class emi::params {
+class emi::params (
+  $emi_version
+) {
   $emi_base_packages = [
                         Package["emi-release"],
                         Package["ca-policy-egi-core"],
@@ -44,12 +46,12 @@ class emi::params {
              $emi_release = "http://emisoft.web.cern.ch/emisoft/dist/EMI/2/sl5/x86_64/base/emi-release-2.0.0-1.sl5.noarch.rpm"
           }
           default: {
-             fail("Unsupported flavor $emi_version for $operatingsystem $operatingsystemrelease")
+             fail("Unsupported EMI flavor $emi_version for $operatingsystem $operatingsystemrelease")
           }
         }
       } else {
         $emi_base_other_extra = [Augeas["epel raise priority"]]
-        $openldap_servers = "openldap"
+        $openldap_servers = "openldap-servers"
         $elversion = 6
         case $emi_version {
           'emi-2': {
@@ -59,7 +61,7 @@ class emi::params {
              $emi_release = "http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm"
           }
           default: {
-             fail("Unsupported flavor $emi_version for $operatingsystem $operatingsystemrelease")
+             fail("Unsupported EMI flavor $emi_version for $operatingsystem $operatingsystemrelease")
           }
         }
       }

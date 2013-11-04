@@ -20,12 +20,46 @@ Managing the certificates: EGI CA and lcg CA
 The emi::egi-ca class will configure the EGI CA certificates in your machine. The EGI CA package contains all the certificates needed for a generic grid installation.
 You can also use the legacy emi::lcg-ca class.
 
+Using the emi module
+--------------------
+
+Parameters:
+* **cert**: host certificate
+* **key**: host key
+* **siteinfo**: site-info.def for yaim
+* **wnlist**: wn-list.def fot yaim
+* **groupconf**: groups.conf for yaim
+* **userconf**: users.conf for yaim
+* **emi_version**: EMI version, valid options ar`emi-1`,`emi-2`,`emi-3`, 
+* **emi_conf**: EMI configuration serial number, increase this to reconfigure
+* **emi_type**: EMI element type
+
+Currently the following emi types are supported:
+* **bdii-site**
+
+**Defining a site BDII**
+
+```site-bdii
+class {'emi':
+    cert        => "puppet:///modules/mymodule/certificates/host.crt",
+    key         => "puppet:///modules/mymodule/certificates/host.key",
+    siteinfo    => "puppet:///modules/mymodule/config/emi-3/site-info.def",
+    wnlist      => "puppet:///modules/mymodule/config/wn-list.conf",
+    groupconf   => "puppet:///modules/mymodule/config/groups.conf",
+    userconf    => "puppet:///modules/mymodule/config/users.conf",
+    emi_version => 'emi-3',
+    emi_conf    => 20137004,
+    emi_type    => 'bdii-site',
+}
+```
+
 Limitations
 ------------
 
 * Only a few configurations are currently supported. Those are:
 
 **certificates**
+**bdii-site**
 
 Contributors
 ------------

@@ -1,4 +1,4 @@
-# == Class: emi::base
+# == Class: emi
 #
 # Base class to configure EMI elements
 #
@@ -6,6 +6,12 @@
 #
 # [*emi_version*]
 #   Version of the EMI middleware to use. Valid options are emi-1,emi-2,emi-3
+#
+# [*emi_type*]
+#   Element type. Valid options are bdii-site,ui
+#
+# [*emi_conf*]
+#   Element configuration serial.
 #
 # [*siteinfo*]
 #   Site configuration. Override to use you customized configuration.
@@ -25,10 +31,13 @@
 # === Examples
 #
 #  class { emi:
-#    siteinfo  => 'puppet:///modules/mymodule/config/site-info.def',
-#    wnlist    => 'puppet:///modules/mymodule/config/wn-list.def',
-#    groupconf => 'puppet:///modules/mymodule/config/groups.def',
-#    userconf  => 'puppet:///modules/mymodule/config/users.def',
+#    emi_version => 'puppet:///modules/mymodule/config/site-info.def',
+#    emi_type    => 'ui',
+#    emi_conf    => 0,
+#    siteinfo    => 'puppet:///modules/mymodule/config/site-info.def',
+#    wnlist      => 'puppet:///modules/mymodule/config/wn-list.def',
+#    groupconf   => 'puppet:///modules/mymodule/config/groups.def',
+#    userconf    => 'puppet:///modules/mymodule/config/users.def',
 #  }
 #
 # === Authors
@@ -39,18 +48,23 @@
 #
 # Copyright 2013 Alessandro De Salvo
 #
-class emi::base (
+class emi (
   $emi_version = 'emi-3',
+  $emi_type = 'ui',
+  $emi_conf = 0,
   $siteinfo = 'puppet:///modules/emi/config/site-info.def',
   $wnlist = 'puppet:///modules/emi/config/wn-list.conf',
   $groupconf = 'puppet:///modules/emi/config/groups.conf',
   $userconf = 'puppet:///modules/emi/config/users.conf',
-  $igi = true
+  $igi = true,
+  $cert = undef,
+  $key = undef,
 ) {
 
    include yumconfig::yum-priorities
    include yumconfig::yum-protectbase
-   include emi::params
+
+   class { 'emi::params': emi_version => $emi_version }
 
    # Fix for sudo bug
    file {"/root/fix-sudo.sh":
@@ -70,7 +84,7 @@ class emi::base (
    package { "emi-release":
       ensure => installed,
       provider => rpm,
-      source => $emi_release,
+      source => $emi::params::emi_release,
       require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_protectbase_package]]
    }
 
@@ -152,6 +166,37 @@ class emi::base (
             changes => [
                 "set epel/priority 50",
             ],
+        }
+    }
+
+
+    # Install the host certificates for selected EMI types
+    case $emi_type {
+        'bdii-site': {
+            if ($cert and $key) {
+                class {'emi::service':
+                    cert     => $cert,
+                    key      => $key,
+                    require  => Package['ca-policy-egi-core'],
+                }
+            } else {
+                fail ("No certificates specified for emi type $emi_type")
+            }
+        }
+    }
+
+    case $emi_type {
+        'ui': {
+            notify {'EMI type $emi_type not implemented':}
+        }
+        'bdii-site': {
+            class { 'emi::bdii-site':
+               emi_conf => $emi_conf,
+               emi_version => $emi_version,
+            }
+        }
+        default: {
+            fail ("Invalid emi type $emi_type")
         }
     }
 }
