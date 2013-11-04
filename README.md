@@ -58,8 +58,8 @@ Limitations
 
 * Only a few configurations are currently supported. Those are:
 
-**certificates**
-**bdii-site**
+* **certificates**
+* **bdii-site**
 
 Contributors
 ------------
