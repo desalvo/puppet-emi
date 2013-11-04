@@ -16,7 +16,7 @@ class emi::params {
                      File["/opt/glite/yaim/functions/config_atlas_localenv"]
                     ]
 
-  $emi_base_other = [Exec["epel enable"]]
+  $emi_base_other = [Augeas["epel enable"]]
 
   if ($igi) {
     $emi_base_extra_files = [File["/etc/yum.repos.d/igi-emi.repo"]]
