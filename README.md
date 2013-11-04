@@ -56,7 +56,7 @@ class {'emi':
 Limitations
 ------------
 
-* Only a few configurations are currently supported. Those are:
+Only a few configurations are currently supported. Those are:
 
 * **certificates**
 * **bdii-site**
