@@ -40,7 +40,7 @@ class emi::bdii-site (
       require => Package["emi-bdii-site"],
    }
 
-   $logfile = "/root/emi-bdii-config-${logserial}.log"
+   $logfile = "/root/emi-bdii-config-${emi_conf}.log"
    exec { "emi-config-bdii-site":
       command => "/opt/glite/yaim/bin/yaim -c -d 6 -s /root/atlas-site-info.def -n BDII_site &> ${logfile}",
       path    => [ '/usr/sbin', '/usr/bin', '/sbin', '/bin' ],
