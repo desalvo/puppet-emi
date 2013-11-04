@@ -1,0 +1,21 @@
+#
+# INFNGRID repositories
+#
+
+[igi-emi_sl5_x86_64_base]
+name    = IGI base sl5 x86_64
+baseurl = http://repo-pd.italiangrid.it/mrepo/igi-emi_sl5-x86_64/RPMS.base/
+	  http://repo-cnaf.italiangrid.it/mrepo/igi-emi_sl5-x86_64/RPMS.base/
+enabled = 1
+protect = 1
+priority = 40
+gpgcheck = 0
+
+[igi-emi_sl5_x86_64_third-party]
+name    = IGI third_party sl5 x86_64
+baseurl = http://repo-pd.italiangrid.it/mrepo/igi-emi_sl5-x86_64/RPMS.third-party/
+	  http://repo-cnaf.italiangrid.it/mrepo/igi-emi_sl5-x86_64/RPMS.third-party/
+enabled = 1
+protect = 1
+priority = 40
+gpgcheck = 0

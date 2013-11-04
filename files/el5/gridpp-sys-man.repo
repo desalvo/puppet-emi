@@ -1,0 +1,5 @@
+[sys-man]
+name=Systems Manager Storage repository
+baseurl=http://www.sysadmin.hep.ac.uk/rpms/fabric-management/RPMS.storage
+gpgcheck=0
+enabled=1

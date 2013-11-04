@@ -1,0 +1,8 @@
+[xrootd32-temp]
+name=Temporary xrootd 3.2 repository
+baseurl=http://rocha.web.cern.ch/rocha/xrootd/rpms/el6/$basearch
+gpgcheck=0
+enabled=1
+priority=30
+protect=0
+
