@@ -18,6 +18,7 @@ class emi::bdii-site (
    $logfile = "/root/emi-bdii-config-${logserial}.log"
    exec { "emi-config-bdii-site":
       command => "/opt/glite/yaim/bin/yaim -c -d 6 -s /root/atlas-site-info.def -n BDII_site &> ${logfile}",
+      path    => [ '/usr/sbin', '/usr/bin', '/sbin', '/bin' ],
       unless  => "test -f ${logfile}",
       require => [Package["emi-bdii-site"],Package["openldap2.4-servers"],File["/root/services/glite-bdii_site"]],
       timeout => 0
