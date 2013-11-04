@@ -5,7 +5,7 @@ Puppet module for managing EMI grid middleware configurations.
 
 #### Table of Contents
 1. [Overview - What is the emi module?](#overview)
-1. [Managing the certification authorities - EGI CA and lcg CA](#managing-the-certificates:-egi-ca-and-lcg-ca)
+2. [Managing the certification authorities - EGI CA and lcg CA](#managing-the-certificates-egi-ca-and-lcg-ca)
 
 Overview
 --------
