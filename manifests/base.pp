@@ -1,12 +1,11 @@
-# == Class: emi
+# == Class: emi::base
 #
-# Generic class to configure EMI elements
+# Base class to configure EMI elements
 #
 # === Parameters
 #
-# [*mwtype*]
-#   Middleware type version.
-#   Valid options are: emi-1, emi-2, emi-3
+# [*emi_version*]
+#   Version of the EMI middleware to use. Valid options are emi-1,emi-2,emi-3
 #
 # [*siteinfo*]
 #   Site configuration. Override to use you customized configuration.
@@ -26,7 +25,6 @@
 # === Examples
 #
 #  class { emi:
-#    mwtype => 'emi-3',
 #    siteinfo  => 'puppet:///modules/mymodule/config/site-info.def',
 #    wnlist    => 'puppet:///modules/mymodule/config/wn-list.def',
 #    groupconf => 'puppet:///modules/mymodule/config/groups.def',
@@ -41,19 +39,18 @@
 #
 # Copyright 2013 Alessandro De Salvo
 #
-class emi(
-  $mwtype = 'emi-3',
+class emi::base (
+  $emi_version = 'emi-3',
   $siteinfo = 'puppet:///modules/emi/config/site-info.def',
   $wnlist = 'puppet:///modules/emi/config/wn-list.conf',
   $groupconf = 'puppet:///modules/emi/config/groups.conf',
   $userconf = 'puppet:///modules/emi/config/users.conf',
   $igi = true
-) inherits emi::params {
+) {
 
    include yumconfig::yum-priorities
    include yumconfig::yum-protectbase
-
-   class { 'emi::params': emi_version => $mwtype }
+   include emi::params
 
    # Fix for sudo bug
    file {"/root/fix-sudo.sh":
@@ -68,32 +65,6 @@ class emi(
       onlyif  => "/root/fix-sudo.sh check",
       require => File["/root/fix-sudo.sh"],
       timeout => 0
-   }
-
-   if $operatingsystemrelease < 6 {
-      case $mwtype {
-         'emi-1': {
-             $emi_release = "http://repo-pd.italiangrid.it/mrepo/EMI/1/sl5/x86_64/updates/emi-release-1.0.1-1.sl5.noarch.rpm"
-         }
-         'emi-2': {
-             $emi_release = "http://emisoft.web.cern.ch/emisoft/dist/EMI/2/sl5/x86_64/base/emi-release-2.0.0-1.sl5.noarch.rpm"
-         }
-         default: {
-             fail("Unsupported flavor $mwtype for $operatingsystem $operatingsystemrelease")
-         }
-      }
-   } else {
-      case $mwtype {
-         'emi-2': {
-             $emi_release = "http://emisoft.web.cern.ch/emisoft/dist/EMI/2/sl6/x86_64/base/emi-release-2.0.0-1.sl6.noarch.rpm"
-         }
-         'emi-3': {
-             $emi_release = "http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm"
-         }
-         default: {
-             fail("Unsupported flavor $mwtype for $operatingsystem $operatingsystemrelease")
-         }
-      }
    }
 
    package { "emi-release":

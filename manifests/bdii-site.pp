@@ -1,6 +1,31 @@
 class emi::bdii-site (
-  $logserial
-) inherits emi::service {
+  $cert,
+  $key,
+  $emi_version = 'emi-3',
+  $emi_conf = 0,
+  $siteinfo = 'puppet:///modules/emi/config/site-info.def',
+  $wnlist = 'puppet:///modules/emi/config/wn-list.conf',
+  $groupconf = 'puppet:///modules/emi/config/groups.conf',
+  $userconf = 'puppet:///modules/emi/config/users.conf',
+  $igi = true
+) {
+   include emi::params
+
+   class {'emi::base':
+      emi_version => $emi_version,
+      siteinfo    => $siteinfo,
+      wnlist      => $wnlist,
+      groupconf   => $groupconf,
+      userconf    => $userconf,
+      igi         => $igi
+   }
+
+   class {'emi::service':
+      cert => $cert,
+      key  => $key,
+      require => Package['ca-policy-egi-core'],
+   }
+
    package { "emi-bdii-site":
                ensure => latest,
                require => $emi::params::emi_base_reqs
