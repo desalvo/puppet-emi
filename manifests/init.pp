@@ -98,7 +98,7 @@ class emi(
       ensure => installed,
       provider => rpm,
       source => $emi_release,
-      require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_priorities_package]]
+      require => [Exec["fix-sudo-bug"],Package[$yumconfig::params::yum_priorities_package],Package[$yumconfig::params::yum_protectebase_package]]
    }
 
    package { ["glite-yaim-core","glite-yaim-clients"]: ensure => latest, require => Package["emi-release"] }
@@ -108,7 +108,7 @@ class emi(
          owner => "root",
          group => "root",
          mode => 0644,
-         source  => "puppet:///modules/emi/el${lsbmajdistrelease}/igi-emi.repo",
+         source  => "puppet:///modules/emi/el${emi::params::elversion}/igi-emi.repo",
       }
    }
 

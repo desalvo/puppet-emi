@@ -33,8 +33,10 @@ class emi::params {
     'centos','scientific','redhat': {
       if ($::operatingsystemrelease < 6) {
         $emi_base_other_extra = []
+        $elversion = 5
       } else {
         $emi_base_other_extra = [Augeas["epel raise priority"]]
+        $elversion = 6
       }
     }
     default: {
