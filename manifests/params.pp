@@ -1,4 +1,6 @@
-class emi::params {
+class emi::params (
+  $emi_version
+) {
   $emi_base_packages = [
                         Package["emi-release"],
                         Package["ca-policy-egi-core"],
@@ -33,14 +35,27 @@ class emi::params {
     'centos','scientific','redhat': {
       if ($::operatingsystemrelease < 6) {
         $emi_base_other_extra = []
+        $openldap_servers = "openldap2.4-servers"
         $elversion = 5
       } else {
         $emi_base_other_extra = [Augeas["epel raise priority"]]
+        $openldap_servers = "openldap"
         $elversion = 6
       }
     }
     default: {
       fail("Unsupported platform: ${::operatingsystem}/${::operatingsystemrelease}")
+    }
+  }
+  case $emi_version {
+    'emi-1','emi-2': {
+      $yaim_bdii_site = "glite-bdii_site"
+    }
+    'emi-3': {
+      $yaim_bdii_site = "emi-bdii_site"
+    }
+    default: {
+      fail ("Unsupported emi version ${mwtype}")
     }
   }
 

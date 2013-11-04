@@ -53,6 +53,8 @@ class emi(
    include yumconfig::yum-priorities
    include yumconfig::yum-protectbase
 
+   class { 'emi::params': emi_version => $mwtype }
+
    # Fix for sudo bug
    file {"/root/fix-sudo.sh":
          owner  => root,
