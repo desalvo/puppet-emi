@@ -73,9 +73,11 @@ class emi::params (
   case $emi_version {
     'emi-1','emi-2': {
       $yaim_bdii_site = "glite-bdii_site"
+      $yaim_ui = "glite-ui"
     }
     'emi-3': {
       $yaim_bdii_site = "emi-bdii_site"
+      $yaim_ui = "glite-ui"
     }
     default: {
       fail ("Unsupported emi version ${mwtype}")

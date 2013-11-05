@@ -33,9 +33,12 @@ Parameters:
 * **emi_version**: EMI version, valid options ar`emi-1`,`emi-2`,`emi-3`, 
 * **emi_conf**: EMI configuration serial number, increase this to reconfigure
 * **emi_type**: EMI element type
+* **lsf_master**: the LSF master hostname. Leaving this unset no LSF support will be configured
+* **lsf_mount**: the mountpoint of the LSF software on the master
 
 Currently the following emi types are supported:
 * **bdii-site**
+* **ui**
 
 **Defining a site BDII**
 

@@ -28,6 +28,12 @@
 # [*igi*]
 #   Add the IGI configurations.
 #
+# [*lsf_master*]
+#   The LSF master hostname.
+#
+# [*lsf_mount*]
+#   The mountpoint of the lsf software on the master.
+#
 # === Examples
 #
 #  class { emi:
@@ -59,6 +65,8 @@ class emi (
   $igi = true,
   $cert = undef,
   $key = undef,
+  $lsf_master = undef,
+  $lsf_mount = '/lsf',
 ) {
 
    include yumconfig::yum-priorities
@@ -187,12 +195,17 @@ class emi (
 
     case $emi_type {
         'ui': {
-            notify {'EMI type $emi_type not implemented':}
+            class { 'emi::ui':
+               emi_conf => $emi_conf,
+               emi_version => $emi_version,
+               lsf_master => $lsf_master,
+               lsf_mount => $lsf_mount
+            }
         }
         'bdii-site': {
             class { 'emi::bdii-site':
                emi_conf => $emi_conf,
-               emi_version => $emi_version,
+               emi_version => $emi_version
             }
         }
         default: {

@@ -1,0 +1,20 @@
+#!/bin/sh
+adduser lsfadmin
+HSETUP="`find /lsf -path '*/install/hostsetup' | sort | tail -n 1`"
+$HSETUP --boot=y --top=/lsf/current
+LSFSHPROFILE="`find /lsf -path '*/conf/profile.lsf' | sort | tail -n 1`"
+LSFCSHPROFILE="`find /lsf -path '*/conf/cshrc.lsf' | sort | tail -n 1`"
+/bin/cp -p /etc/profile /etc/profile.orig
+/bin/cat  >> /etc/profile <<EOProfile
+# LSF settings
+source $LSFSHPROFILE
+EOProfile
+/bin/cp -p /etc/csh.cshrc /etc/csh.cshrc.orig
+/bin/cat  >> /etc/csh.cshrc <<EOCshrc
+# LSF settings
+source $LSFCSHPROFILE
+EOCshrc
+# Make the LSF Sys V script executable!!!
+chmod +x /etc/rc.d/init.d/lsf
+# Start lsf
+service lsf start
