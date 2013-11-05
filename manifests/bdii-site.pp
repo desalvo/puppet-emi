@@ -31,10 +31,11 @@ class emi::bdii-site (
       timeout => 0
    }
    exec { "validate-emi-config-bdii-site":
-      command => "tail -n 1 ${logfile} | cut -d: -f 1 | sed -e 's/^ *//g' -e 's/ *$//g' | grep -v ERROR &> /dev/null",
+      command => "/bin/false",
       path    => [ '/usr/sbin', '/usr/bin', '/sbin', '/bin' ],
-      onlyif  => "test -s ${logfile}",
+      onlyif  => "test -s ${logfile} && tail -n 1 ${logfile} | grep ERROR: &> /dev/null",
       require => Exec["emi-config-bdii-site"],
+      logoutput => true,
       timeout => 0
    }
 }
