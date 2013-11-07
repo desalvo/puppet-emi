@@ -46,7 +46,7 @@ class emi::ui (
                            "lcgdm-libs.x86_64", "lcgdm-devel.x86_64",
                            "lcgdm-libs.i686", "lcgdm-devel.i686",
                            "lfc.x86_64", "lfc-devel.x86_64",
-                           "lfc.i686", "lfc-devel.i686",
+                           "lfc-devel.i686",
                            "globus-gram-client-tools",
                           ]
             }
