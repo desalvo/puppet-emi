@@ -103,7 +103,7 @@ class emi::ui (
          atboot => true,
          device => "${lsf_master}:${lsf_mount}",
          fstype => "nfs",
-         options => "defaults",
+         options => "intr,defaults",
          require => File["/lsf"]
       }
 

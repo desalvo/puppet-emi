@@ -65,6 +65,8 @@ class emi (
   $igi = true,
   $cert = undef,
   $key = undef,
+  $yaim_bdii_site = "puppet:///modules/emi/services/emi-3/emi-bdii_site",
+  $yaim_ui = "puppet:///modules/emi/services/emi-3/glite-ui",
   $lsf_master = undef,
   $lsf_mount = '/lsf',
 ) {
@@ -196,16 +198,18 @@ class emi (
     case $emi_type {
         'ui': {
             class { 'emi::ui':
-               emi_conf => $emi_conf,
+               emi_conf    => $emi_conf,
                emi_version => $emi_version,
-               lsf_master => $lsf_master,
-               lsf_mount => $lsf_mount
+               yaim_ui     => $yaim_ui,
+               lsf_master  => $lsf_master,
+               lsf_mount   => $lsf_mount
             }
         }
         'bdii-site': {
             class { 'emi::bdii-site':
-               emi_conf => $emi_conf,
-               emi_version => $emi_version
+               emi_conf       => $emi_conf,
+               emi_version    => $emi_version,
+               yaim_bdii_site => $yaim_bdii_site
             }
         }
         default: {
