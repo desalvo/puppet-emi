@@ -19,3 +19,9 @@ enabled = 1
 protect = 1
 priority = 40
 gpgcheck = 0
+
+#[HEP_OSlibs]
+#name=HEP_OSlibs
+#baseurl=http://grid-deployment.web.cern.ch/grid-deployment/download/HEP/repo/sl5/x86_64
+#enabled=1
+#gpgcheck=0

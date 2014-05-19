@@ -1,0 +1,84 @@
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2004.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        glite-glexec_wn
+#
+# DESCRIPTION : This configuration file contains the variables needed to configure the
+#               glexec for the WN. Sys admins must define these variables.                
+#
+# AUTHORS :     yaim-contact@cern.ch
+#
+# NOTES :
+#
+# YAIM MODULE:  glite-yaim-clients
+#
+##############################################################################
+
+# Define this variable to configure glexec to work with SCAS.
+# - yes : means you want to use a SCAS server and therefore you need to define:
+# SCAS_ENDPOINTS="https://scas1.site.com:8443 https://scas2.site.com:8443"
+# Alternatively, the old style variables can be used as well:
+#         - SCAS_HOST="scas server hostname"
+#         - SCAS_PORT="scas server port"
+# - no  : means you don't want to use any SCAS server.
+GLEXEC_WN_SCAS_ENABLED="yes or no"
+
+# Define this variable to configure glexec to use the ARGUS authorization framework.
+# - yes : means you want to use ARGUS and therefore you need to define:
+# ARGUS_PEPD_ENDPOINTS="http://argus1.site.com:8154/authz http://argus2.site.com:8154/authz"
+# A list of endpoints for the pepc plugin to try.
+# - no  : means you don't want to use ARGUS.
+GLEXEC_WN_ARGUS_ENABLED="yes or no"
+
+# Note that if both GLEXEC_WN_SCAS_ENABLED = yes and GLEXEC_WN_ARGUS_ENABLED = yes then
+# the policy is to use ARGUS first, then SCAS. This may be useful if e.g. you use
+# ARGUS for global banning and SCAS for account mapping, but typically you want just
+# one or the other, not both.
+
+# Define this variable to configure the operation mode of glexec in your WN.
+# The possibilities are:
+# - setuid   : it will actually enable glexec to do the identity change
+# - log-only : it won't do any identity change. If you select log-only, it
+#              doesn't matter whether SCAS is enabled or not. It isn't used.
+GLEXEC_WN_OPMODE="setuid or log-only"           
+
+# Optional variable to tell glexec where to send the glexec logging information.
+# There are two values: 'syslog' and 'file'. The default is 'syslog'
+# The value 'syslog' puts all messages in the syslog
+# and 'file' puts the messages in a file.
+# Define this variable if you want to specify a file.
+# For value 'file' the variable GLEXEC_WN_LOG_FILE defines the location
+# of the log file.
+# REMEMBER that for log-only mode, 'syslog' should be used !
+# GLEXEC_WN_LOG_DESTINATION=file
+
+# Optional variable to add additional users to the glexec white list,
+# e.g. for local testing purposes. Syntax is comma separated user and/or
+# pool names.
+# GLEXEC_EXTRA_WHITELIST="john,fred,.pvier"
+
+# Glexec user home dir; this optional variable is passed to the adduser
+# call only if it is set.
+# GLEXEC_USER_HOME=/var/lib/glexec
+
+# Variables to set the locking mechanism used by glexec, for
+# the input proxies and the target proxy
+# Allowed values are flock, fcntl, disabled.
+# GLEXEC_WN_INPUT_LOCK=flock
+# GLEXEC_WN_TARGET_LOCK=flock

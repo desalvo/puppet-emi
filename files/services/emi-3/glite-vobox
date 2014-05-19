@@ -5,7 +5,8 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at #
+# You may obtain a copy of the License at
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -16,11 +17,12 @@
 # limitations under the License.
 ##############################################################################
 #
-# NAME :        atlas_localenv
+# NAME :        glite-vobox
 #
-# DESCRIPTION : This file contains the function list to configure the ATLAS localenv.
+# DESCRIPTION : This configuration file contains the list of variables needed
+#               to configure the VOBOX together with site-info.def.
 #
-# AUTHORS :     Alessandro.DeSalvo@roma1.infn.it
+# AUTHORS :     yaim-contact@cern.ch
 #
 # NOTES :
 #
@@ -28,4 +30,11 @@
 #
 ##############################################################################
 
-ATLAS_LOCALENV_FUNCTIONS="config_atlas_localenv"
+VOBOX_HOST=my-vobox.$MY_DOMAIN
+
+# Define your X509toKERBEROS Authentication Server if GSSKLOG=yes
+# Only for sites with Experiment Software Area under AFS
+#GSSKLOG_SERVER=my-gssklog.$MY_DOMAIN
+
+
+
